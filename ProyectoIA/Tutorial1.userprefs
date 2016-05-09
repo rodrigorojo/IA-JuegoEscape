@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\AIPlayer.cs">
+    <Files>
+      <File FileName="Assets\scripts\GameManager.cs" Line="73" Column="3" />
+      <File FileName="Assets\scripts\Tile.cs" Line="30" Column="3" />
+      <File FileName="Assets\scripts\UserPlayer.cs" Line="5" Column="2" />
+      <File FileName="Assets\scripts\AIPlayer.cs" Line="5" Column="2" />
+      <File FileName="Assets\scripts\Player.cs" Line="7" Column="33" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
