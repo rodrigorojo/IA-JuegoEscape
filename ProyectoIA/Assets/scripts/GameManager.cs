@@ -84,22 +84,22 @@ public class GameManager : MonoBehaviour {
 		
 		players.Add(player);
 
-        enem0x = (int)Mathf.Round(Random.Range(15.0f, 29.0f));
-        enem0y = (int)Mathf.Round(Random.Range(0.0f, 9.0f));
+        enem0x = (int)Mathf.Round(Random.Range(mapSizex/2, mapSizex-1));
+        enem0y = (int)Mathf.Round(Random.Range(0.0f, (mapSizey/2)-1));
 
         AIPlayer aiplayer = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem0x - Mathf.Floor(mapSizex/2),1.5f, -enem0y + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
 		
 		players.Add(aiplayer);
 
-        enem1x = (int)Mathf.Round(Random.Range(0.0f, 14.0f));
-        enem1y = (int)Mathf.Round(Random.Range(10.0f, 19.0f));
+        enem1x = (int)Mathf.Round(Random.Range(0.0f, (mapSizex/2)-1));
+        enem1y = (int)Mathf.Round(Random.Range(mapSizey/2, mapSizey-1));
 
         AIPlayer aiplayer2 = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem1x - Mathf.Floor(mapSizex / 2), 1.5f, -enem1y + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
 
         players.Add(aiplayer2);
 
-        enem2x = (int)Mathf.Round(Random.Range(15.0f, 28.0f));
-        enem2y = (int)Mathf.Round(Random.Range(10.0f, 18.0f));
+        enem2x = (int)Mathf.Round(Random.Range(mapSizex/2, mapSizex-2));
+        enem2y = (int)Mathf.Round(Random.Range(mapSizey/2, mapSizey-2));
 
         AIPlayer aiplayer3 = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem2x - Mathf.Floor(mapSizex / 2), 1.5f, -enem2y + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
 
@@ -107,20 +107,22 @@ public class GameManager : MonoBehaviour {
     }
 
     void generateWalls() {
+        int limit = (int)Mathf.Round((mapSizex * mapSizey) / 10);
 
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < limit; i++)
         {
             int m = -1;
             int n = -1;
             Wall wall0;
             while(m == -1 || m == enem0x || m == enem1x || m == enem2x) {
-                m = (int)Mathf.Round(Random.Range(1.0f, 28.0f));
+                m = (int)Mathf.Round(Random.Range(1.0f, mapSizex - 2));
             }
             while(n == -1 || n == enem0y || n == enem1y || n == enem2y) {
-                n = (int)Mathf.Round(Random.Range(1.0f, 18.0f));
+                n = (int)Mathf.Round(Random.Range(1.0f, mapSizey - 2));
             }
             wall0 = ((GameObject)Instantiate(WallPrefab, new Vector3(m - Mathf.Floor(mapSizex / 2), 1.0f, -n + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<Wall>();
-
+            wall0.wallPosition = new Vector2(m, n);
+            map[m][n].wall = true;
             walls.Add(wall0);
         }
     }

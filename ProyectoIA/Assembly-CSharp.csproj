@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\AIPlayer.cs" />
+     <Compile Include="Assets\scripts\CameraController.cs" />
      <Compile Include="Assets\scripts\GameManager.cs" />
      <Compile Include="Assets\scripts\Goal.cs" />
      <Compile Include="Assets\scripts\Player.cs" />

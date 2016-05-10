@@ -3,8 +3,10 @@ using System.Collections;
 
 public class Wall : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public Vector2 wallPosition = Vector2.zero;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	

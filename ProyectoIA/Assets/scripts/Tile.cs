@@ -4,7 +4,8 @@ using System.Collections;
 public class Tile : MonoBehaviour {
 	
 	public Vector2 gridPosition = Vector2.zero;
-	
+    public bool wall = false;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -29,5 +30,6 @@ public class Tile : MonoBehaviour {
 	void OnMouseDown() {
 		//GameManager.instance.moveCurrentPlayer(this);
 	}
+
 	
 }
