@@ -4,12 +4,16 @@ using System.Collections;
 public class Tile : MonoBehaviour {
 	
 	public Vector2 gridPosition = Vector2.zero;
-    public bool wall = false;
+    public bool wall;
+    public bool mpl;
+    public bool epl; 
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        wall = false;
+        mpl = false;
+        epl = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {

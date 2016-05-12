@@ -78,31 +78,31 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void generatePlayers() {
-		UserPlayer player;
-		
-		player = ((GameObject)Instantiate(UserPlayerPrefab, new Vector3(0 - Mathf.Floor(mapSizex/2),1.5f, -0 + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<UserPlayer>();
-		
+
+        UserPlayer player = ((GameObject)Instantiate(UserPlayerPrefab, new Vector3(0 - Mathf.Floor(mapSizex/2),1.5f, -0 + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<UserPlayer>();
+        map[0][0].mpl = true;
+        player.currentPosition = new Vector2(0, 0);
 		players.Add(player);
 
         enem0x = (int)Mathf.Round(Random.Range(mapSizex/2, mapSizex-1));
         enem0y = (int)Mathf.Round(Random.Range(0.0f, (mapSizey/2)-1));
-
         AIPlayer aiplayer = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem0x - Mathf.Floor(mapSizex/2),1.5f, -enem0y + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
-		
+        map[enem0x][enem0y].epl = true;
+        aiplayer.currentPosition = new Vector2(enem0x, enem0y);
 		players.Add(aiplayer);
 
         enem1x = (int)Mathf.Round(Random.Range(0.0f, (mapSizex/2)-1));
         enem1y = (int)Mathf.Round(Random.Range(mapSizey/2, mapSizey-1));
-
         AIPlayer aiplayer2 = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem1x - Mathf.Floor(mapSizex / 2), 1.5f, -enem1y + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
-
+        map[enem1x][enem1y].epl = true;
+        aiplayer2.currentPosition = new Vector2(enem1x, enem1y);
         players.Add(aiplayer2);
 
         enem2x = (int)Mathf.Round(Random.Range(mapSizex/2, mapSizex-2));
         enem2y = (int)Mathf.Round(Random.Range(mapSizey/2, mapSizey-2));
-
         AIPlayer aiplayer3 = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem2x - Mathf.Floor(mapSizex / 2), 1.5f, -enem2y + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
-
+        map[enem2x][enem2y].epl = true;
+        aiplayer3.currentPosition = new Vector2(enem2x, enem2y);
         players.Add(aiplayer3);
     }
 

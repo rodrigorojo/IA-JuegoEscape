@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	
+
+    public Vector2 currentPosition = Vector2.zero;
 	public Vector3 moveDestination;
 	public float moveSpeed = 10.0f;
 	

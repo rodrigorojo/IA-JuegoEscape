@@ -28,8 +28,10 @@ public class CameraController : MonoBehaviour {
 	void Update () {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        float moveDepth = Input.GetAxis("Mouse ScrollWheel");
 
-        Vector3 movement = new Vector3(0.0f, moveHorizontal, moveVertical);
-        transform.position = transform.position + movement;
+        Vector3 movement = new Vector3(moveHorizontal, moveDepth, moveVertical);
+
+        transform.position = transform.position + (movement *0.5f);
     }
 }
