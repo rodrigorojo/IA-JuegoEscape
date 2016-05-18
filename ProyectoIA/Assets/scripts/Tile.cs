@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour {
 	
 	
 	void OnMouseDown() {
-		//GameManager.instance.moveCurrentPlayer(this);
+		GameManager.instance.moveCurrentPlayer();
 	}
 
 	

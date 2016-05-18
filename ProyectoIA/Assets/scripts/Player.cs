@@ -11,27 +11,27 @@ public class Player : MonoBehaviour {
 		moveDestination = transform.position;
 	}
 
-    void goUp() {
+    public void goUp() {
         Vector2 v = new Vector2(0, 1);
         moveDestination = new Vector3((currentPosition.x) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y + 1) + Mathf.Floor(GameManager.instance.mapSizex / 2));
         currentPosition = currentPosition + v;
     }
 
-    void goDown()
+    public void goDown()
     {
         Vector2 v = new Vector2(0, -1);
         moveDestination = new Vector3((currentPosition.x) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y - 1) + Mathf.Floor(GameManager.instance.mapSizex / 2));
         currentPosition = currentPosition + v;
     }
 
-    void goRight()
+    public void goRight()
     {
         Vector2 v = new Vector2(1, 0);
         moveDestination = new Vector3((currentPosition.x + 1) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));
         currentPosition = currentPosition + v;
     }
 
-    void goLeft()
+    public void goLeft()
     {
         Vector2 v = new Vector2(-1, 0);
         moveDestination = new Vector3((currentPosition.x - 1) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));

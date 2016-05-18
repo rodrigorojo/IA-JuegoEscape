@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	
-	public void moveCurrentPlayer(Tile destTile) {
-		players[currentPlayerIndex].moveDestination = destTile.transform.position + 1.5f * Vector3.up;
+	public void moveCurrentPlayer() {
+        players[currentPlayerIndex].goRight();
 	}
 	
 	void generateMap() {
