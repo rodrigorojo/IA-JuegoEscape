@@ -17,13 +17,26 @@ public class Tile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
+
+    public void ColorOnView(int o)
+    {
+        if(o == 0)
+            transform.GetComponent<Renderer>().material.color = Color.blue;
+        else
+            transform.GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    public void ClearView()
+    {
+        transform.GetComponent<Renderer>().material.color = Color.white;
+    }
 	
 	void OnMouseEnter() {
 		transform.GetComponent<Renderer>().material.color = Color.blue;
 		
-		Debug.Log("my position is (" + gridPosition.x + "," + gridPosition.y);
+		//Debug.Log("my position is (" + gridPosition.x + "," + gridPosition.y);
 	}
 	
 	void OnMouseExit() {

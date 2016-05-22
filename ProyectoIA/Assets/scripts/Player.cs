@@ -1,7 +1,26 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
+
+    public class Objetivo
+    {
+        public string name;
+        public int priority;
+        public Objetivo(string n, int p)
+        {
+            name = n;
+            priority = p;
+        }
+
+        public void changePriority(int c)
+        {
+            priority += c;
+        }
+    }
+
+    public List<Objetivo> objs = new List<Objetivo>();
 
     public Vector2 currentPosition = Vector2.zero;
 	public Vector3 moveDestination;
@@ -36,6 +55,24 @@ public class Player : MonoBehaviour {
         Vector2 v = new Vector2(-1, 0);
         moveDestination = new Vector3((currentPosition.x - 1) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));
         currentPosition = currentPosition + v;
+    }
+
+    public virtual void getView()
+    {
+        
+    }
+
+    public virtual char Desicion()
+    {
+        return ' ';
+    }
+
+    public void cleanView()
+    {
+        for (int i = (int)currentPosition.x; i < GameManager.instance.mapSizex; i++)
+        {
+            GameManager.instance.map[i][(int)currentPosition.y].ClearView();
+        }
     }
 
     // Use this for initialization

@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour {
     private int enem2y;
 
 	
-	List <List<Tile>> map = new List<List<Tile>>();
-	List <Player> players = new List<Player>();
-    List <Wall> walls = new List<Wall>();
+	public List <List<Tile>> map = new List<List<Tile>>();
+	public List <Player> players = new List<Player>();
+    public List <Wall> walls = new List<Wall>();
 	int currentPlayerIndex = 0;
 	
 	void Awake() {
@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		players[currentPlayerIndex].TurnUpdate();
+        Debug.Log("turn: " + currentPlayerIndex);
+        players[currentPlayerIndex].TurnUpdate();
 	}
 	
 	public void nextTurn() {
@@ -53,8 +53,9 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void moveCurrentPlayer() {
+        //players[currentPlayerIndex].getView();
         players[currentPlayerIndex].goRight();
-	}
+    }
 	
 	void generateMap() {
 		map = new List<List<Tile>>();
