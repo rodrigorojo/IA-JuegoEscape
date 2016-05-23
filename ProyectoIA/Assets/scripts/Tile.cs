@@ -10,9 +10,7 @@ public class Tile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        wall = false;
-        mpl = false;
-        epl = false;
+        
     }
 	
 	// Update is called once per frame
@@ -24,13 +22,10 @@ public class Tile : MonoBehaviour {
     {
         if(o == 0)
             transform.GetComponent<Renderer>().material.color = Color.blue;
-        else
+        else if(o == 1)
             transform.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    public void ClearView()
-    {
-        transform.GetComponent<Renderer>().material.color = Color.white;
+        else
+            transform.GetComponent<Renderer>().material.color = Color.white;
     }
 	
 	void OnMouseEnter() {
@@ -45,6 +40,8 @@ public class Tile : MonoBehaviour {
 	
 	
 	void OnMouseDown() {
+        print("hay jugador: " + mpl);
+        print("hay enemigo: " + epl);
 		GameManager.instance.moveCurrentPlayer();
 	}
 

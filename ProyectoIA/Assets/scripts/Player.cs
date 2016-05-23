@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
     public List<Objetivo> objs = new List<Objetivo>();
 
     public Vector2 currentPosition = Vector2.zero;
+    public Vector2 previousPosition = Vector2.zero;
 	public Vector3 moveDestination;
 	public float moveSpeed = 10.0f;
 	
@@ -30,31 +31,41 @@ public class Player : MonoBehaviour {
 		moveDestination = transform.position;
 	}
 
-    public void goUp() {
-        Vector2 v = new Vector2(0, 1);
-        moveDestination = new Vector3((currentPosition.x) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y + 1) + Mathf.Floor(GameManager.instance.mapSizex / 2));
-        currentPosition = currentPosition + v;
+    public string maxPr()
+    {
+        string res = " ";
+        int max = 0;
+        for (int i = 0; i < objs.Count; i++)
+        {
+            if (objs[i].priority > max)
+            {
+                max = objs[i].priority;
+                res = objs[i].name;
+            }
+        }
+        return res;
     }
 
-    public void goDown()
+
+    public virtual void goDown()
     {
-        Vector2 v = new Vector2(0, -1);
-        moveDestination = new Vector3((currentPosition.x) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y - 1) + Mathf.Floor(GameManager.instance.mapSizex / 2));
-        currentPosition = currentPosition + v;
+        
+
     }
 
-    public void goRight()
+    public virtual void goUp()
     {
-        Vector2 v = new Vector2(1, 0);
-        moveDestination = new Vector3((currentPosition.x + 1) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));
-        currentPosition = currentPosition + v;
+        
     }
 
-    public void goLeft()
+    public virtual void goRight()
     {
-        Vector2 v = new Vector2(-1, 0);
-        moveDestination = new Vector3((currentPosition.x - 1) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(currentPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));
-        currentPosition = currentPosition + v;
+        
+    }
+
+    public virtual void goLeft()
+    {
+        
     }
 
     public virtual void getView()
@@ -69,9 +80,33 @@ public class Player : MonoBehaviour {
 
     public void cleanView()
     {
-        for (int i = (int)currentPosition.x; i < GameManager.instance.mapSizex; i++)
+        int cx1 = (int)previousPosition.x;
+        int cx2 = (int)previousPosition.x;
+        int cy1 = (int)previousPosition.y;
+        int cy2 = (int)previousPosition.y;
+
+        while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)previousPosition.y].wall)
         {
-            GameManager.instance.map[i][(int)currentPosition.y].ClearView();
+            GameManager.instance.map[cx1][(int)previousPosition.y].ColorOnView(2);
+            cx1--;
+        }
+
+        while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)previousPosition.y].wall)
+        {
+            GameManager.instance.map[cx2][(int)previousPosition.y].ColorOnView(2);
+            cx2++;
+        }
+
+        while (cy1 >= 0 && !GameManager.instance.map[(int)previousPosition.x][cy1].wall)
+        {
+            GameManager.instance.map[(int)previousPosition.x][cy1].ColorOnView(2);
+            cy1--;
+        }
+
+        while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)previousPosition.x][cy2].wall)
+        {
+            GameManager.instance.map[(int)previousPosition.x][cy2].ColorOnView(2);
+            cy2++;
         }
     }
 

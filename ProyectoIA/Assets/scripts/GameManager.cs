@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour {
     public GameObject WallPrefab;
     public GameObject GoalPrefab;
 	
-	public int mapSizex = 30;
-    public int mapSizey = 20;
+	public int mapSizex;
+    public int mapSizey;
 
     private int enem0x;
     private int enem0y;
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("turn: " + currentPlayerIndex);
+       // Debug.Log("turn: " + currentPlayerIndex);
         players[currentPlayerIndex].TurnUpdate();
 	}
 	
@@ -53,8 +53,12 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void moveCurrentPlayer() {
-        //players[currentPlayerIndex].getView();
+        
         players[currentPlayerIndex].goRight();
+        
+        players[currentPlayerIndex].cleanView();
+        players[currentPlayerIndex].getView();
+
     }
 	
 	void generateMap() {
