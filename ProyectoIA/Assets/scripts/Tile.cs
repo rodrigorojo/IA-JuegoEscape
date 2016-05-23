@@ -40,9 +40,7 @@ public class Tile : MonoBehaviour {
 	}
 	
 	
-	void OnMouseDown() {
-        print("hay jugador: " + mpl);
-        print("hay enemigo: " + epl);
+	void OnMouseDown() {        
 		GameManager.instance.moveCurrentPlayer();
 	}
 

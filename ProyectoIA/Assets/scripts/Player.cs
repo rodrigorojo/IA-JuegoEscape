@@ -26,6 +26,13 @@ public class Player : MonoBehaviour {
     public Vector2 previousPosition = Vector2.zero;
 	public Vector3 moveDestination;
 	public float moveSpeed = 10.0f;
+
+	public int distUp;
+	public int distDown;
+	public int distLeft;
+	public int distRight;
+
+
 	
 	void Awake () {
 		moveDestination = transform.position;
@@ -46,10 +53,13 @@ public class Player : MonoBehaviour {
         return res;
     }
 
+	public virtual void goPreviousPosition()
+	{
+
+	}
 
     public virtual void goDown()
     {
-        
 
     }
 
@@ -104,6 +114,7 @@ public class Player : MonoBehaviour {
             GameManager.instance.map[cx1][(int)currentPosition.y].ColorOnView(n);
             GameManager.instance.map[cx1][(int)currentPosition.y].lci = i;
             cx1--;
+
         }
 
         while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
@@ -111,6 +122,7 @@ public class Player : MonoBehaviour {
             GameManager.instance.map[cx2][(int)currentPosition.y].ColorOnView(n);
             GameManager.instance.map[cx2][(int)currentPosition.y].lci = i;
             cx2++;
+
         }
 
         while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
@@ -118,6 +130,7 @@ public class Player : MonoBehaviour {
             GameManager.instance.map[(int)currentPosition.x][cy1].ColorOnView(n);
             GameManager.instance.map[(int)currentPosition.x][cy1].lci = i;
             cy1--;
+
         }
 
         while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
@@ -125,7 +138,9 @@ public class Player : MonoBehaviour {
             GameManager.instance.map[(int)currentPosition.x][cy2].ColorOnView(n);
             GameManager.instance.map[(int)currentPosition.x][cy2].lci = i;
             cy2++;
+
         }
+
     }
 
     public void cleanView(int i)
@@ -192,6 +207,10 @@ public class Player : MonoBehaviour {
     {
 
     }
+
+	public virtual void chooseAction(){
+		
+	}
 
     // Use this for initialization
     void Start () {
