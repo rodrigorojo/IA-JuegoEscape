@@ -32,11 +32,12 @@ public class GameManager : MonoBehaviour {
 		generatePlayers();
        
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
        // Debug.Log("turn: " + currentPlayerIndex);
-        players[currentPlayerIndex].TurnUpdate();
+
+		players [currentPlayerIndex].TurnUpdate ();
 	}
 	
 	public void nextTurn() {
@@ -53,7 +54,6 @@ public class GameManager : MonoBehaviour {
         
         players[currentPlayerIndex].cleanView(currentPlayerIndex);
         players[currentPlayerIndex].colorView(currentPlayerIndex,0);
-
     }
 	
 	void generateMap() {
@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour {
 			map[enemx][enemy].epl = true;
 			aiplayer.currentPosition = new Vector2(enemx, enemy);
 			players.Add(aiplayer);
-			print ("x: "+enemx + " y: "+enemy);
 			
 		}
     }
