@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour {
         
         players[currentPlayerIndex].goRight();
         
-        players[currentPlayerIndex].cleanView();
-        players[currentPlayerIndex].getView();
+        players[currentPlayerIndex].cleanView(currentPlayerIndex);
+        players[currentPlayerIndex].colorView(currentPlayerIndex,0);
 
     }
 	
@@ -119,10 +119,8 @@ public class GameManager : MonoBehaviour {
             int m = -1;
             int n = -1;
             Wall wall0;
-            while(m == -1 || m == enem0x || m == enem1x || m == enem2x) {
+            while(m == -1 || n == -1 || (m == enem0x && n == enem0y) || (m == enem1x && n == enem1y) || (m == enem2x && n == enem2y)) {
                 m = (int)Mathf.Round(Random.Range(1.0f, mapSizex - 2));
-            }
-            while(n == -1 || n == enem0y || n == enem1y || n == enem2y) {
                 n = (int)Mathf.Round(Random.Range(1.0f, mapSizey - 2));
             }
             wall0 = ((GameObject)Instantiate(WallPrefab, new Vector3(m - Mathf.Floor(mapSizex / 2), 1.0f, -n + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<Wall>();

@@ -56,36 +56,9 @@ public class AIPlayer : Player {
         GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].epl = true;
     }
 
-    public override void getView()
+    public override void colorView(int i, int n)
     {
-        int cx1 = (int)currentPosition.x;
-        int cx2 = (int)currentPosition.x;
-        int cy1 = (int)currentPosition.y;
-        int cy2 = (int)currentPosition.y;
-
-        while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
-        {
-            GameManager.instance.map[cx1][(int)currentPosition.y].ColorOnView(1);
-            cx1--;
-        }
-
-        while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
-        {
-            GameManager.instance.map[cx2][(int)currentPosition.y].ColorOnView(1);
-            cx2++;
-        }
-
-        while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
-        {
-            GameManager.instance.map[(int)currentPosition.x][cy1].ColorOnView(1);
-            cy1--;
-        }
-
-        while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
-        {
-            GameManager.instance.map[(int)currentPosition.x][cy2].ColorOnView(1);
-            cy2++;
-        }
+        base.colorView(i, 1);
     }
 
     public override void TurnUpdate ()

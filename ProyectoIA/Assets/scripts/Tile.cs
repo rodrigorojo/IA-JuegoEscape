@@ -6,7 +6,8 @@ public class Tile : MonoBehaviour {
 	public Vector2 gridPosition = Vector2.zero;
     public bool wall;
     public bool mpl;
-    public bool epl; 
+    public bool epl;
+    public int lci;
 
 	// Use this for initialization
 	void Start () {
