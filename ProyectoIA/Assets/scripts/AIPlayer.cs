@@ -7,7 +7,7 @@ public class AIPlayer : Player {
 
     // Use this for initialization
     void Start () {
-        objs.Add(new Objetivo("buscar", 10));
+        //objs.Add(new Objetivo("buscar", 10));
 	}
 	
 	// Update is called once per frame
@@ -76,6 +76,9 @@ public class AIPlayer : Player {
 
 	public override void getView()
 	{
+		objs.Clear ();
+		objs.Add(new Objetivo("buscar", 10));
+
 		int cx1 = (int)currentPosition.x;
 		int cx2 = (int)currentPosition.x;
 		int cy1 = (int)currentPosition.y;
@@ -89,28 +92,28 @@ public class AIPlayer : Player {
 
 		if (cx1 > 0 && cy1 > 0)
 		{
-			if (GameManager.instance.map[cx1 - 1][cy1 - 1].mpl)
-				objs.Add(new Objetivo("pesi", 20));
+			if (GameManager.instance.map [cx1 - 1] [cy1 - 1].mpl)
+				addObjetivo (new Objetivo("pesi", 20));
+			//objs.//Add(new Objetivo("pesi", 20));
 		}
 
 		if (cx1 > 0 && cy1 < GameManager.instance.mapSizey - 1)
 		{
 			if (GameManager.instance.map[cx1 - 1][cy1 + 1].mpl)
-				objs.Add(new Objetivo("peii", 20));
+				addObjetivo(new Objetivo("peii", 20));
 		}
 
 		if (cx1 < GameManager.instance.mapSizex - 1 && cy1 > 0)
 		{
 			if (GameManager.instance.map[cx1 + 1][cy1 - 1].mpl)
-				objs.Add(new Objetivo("pesd", 20));
+				addObjetivo(new Objetivo("pesd", 20));
 		}
 
 		if (cx1 < GameManager.instance.mapSizex - 1 && cy1 < GameManager.instance.mapSizey - 1)
 		{
 			if (GameManager.instance.map[cx1 + 1][cy1 + 1].mpl)
-				objs.Add(new Objetivo("peid", 20));
+				addObjetivo(new Objetivo("peid", 20));
 		}
-
 		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
 		{
 			if (GameManager.instance.map[cx1][(int)currentPosition.y].mpl)
@@ -120,7 +123,6 @@ public class AIPlayer : Player {
 			distLeft++;
 
 		}
-
 		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
 		{
 			if (GameManager.instance.map[cx2][(int)currentPosition.y].mpl)
@@ -160,7 +162,7 @@ public class AIPlayer : Player {
 		print (obj);
 		switch (obj) {
 		case "pesi":
-			if (distUp == 0 || distUp >= distLeft) {
+			if (distUp == 0 || distUp > distLeft) {
 				goLeft ();			
 			} else if (distLeft == 0 || distUp < distLeft) {
 				goUp ();
@@ -169,7 +171,7 @@ public class AIPlayer : Player {
 			}
 			break;
 		case "peii":
-			if (distDown == 0 || distDown >= distLeft) {
+			if (distDown == 0 || distDown > distLeft) {
 				goLeft ();
 			} else if (distLeft == 0 || distDown < distLeft) {
 				goDown ();
@@ -179,7 +181,7 @@ public class AIPlayer : Player {
 			}
 			break;
 		case "pesd":
-			if (distUp == 0 || distUp >= distRight) {
+			if (distUp == 0 || distUp > distRight) {
 				goRight ();
 			} else if (distRight == 0 || distUp < distRight) {
 				goDown ();
@@ -189,7 +191,7 @@ public class AIPlayer : Player {
 			}
 			break;
 		case "peid":
-			if (distDown == 0 || distDown >= distRight) {
+			if (distDown == 0 || distDown > distRight) {
 				goRight ();
 			} else if (distRight == 0 || distDown < distRight) {
 				goDown ();
@@ -235,17 +237,35 @@ public class AIPlayer : Player {
 	}
 
 	public void buscar(){
-		if (distUp != 0) {
-			goUp ();
-		} else if (distLeft != 0) {
-			goLeft ();
-		} else if (distDown != 0) {
-			goDown ();
-		} else if (distRight != 0) {
-			goRight ();
-		} else {
-			goPreviousPosition ();
+
+		int max = distMax ();
+		switch(max){
+			case 0:
+				goUp ();
+				break;
+			case 1:
+				goRight ();
+				break;
+			case 2:
+				goDown ();
+				break;
+			case 3:
+				goLeft ();
+				break;
 		}
+	}
+
+	public int distMax(){
+		if (distUp > distDown && distUp > distLeft && distUp > distRight) {
+			return 0;
+		} else if (distRight > distLeft && distRight > distDown) {
+			return 1;
+		} else if (distDown > distLeft ) {
+			return 2;
+		}else{
+			return 3;
+		}
+
 	}
 
     public override void TurnUpdate ()

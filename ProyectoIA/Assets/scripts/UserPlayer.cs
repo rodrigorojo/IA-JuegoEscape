@@ -62,20 +62,57 @@ public class UserPlayer : Player {
 
 	public override void getView()
 	{
+		int cx1 = (int)currentPosition.x;
+		int cx2 = (int)currentPosition.x;
+		int cy1 = (int)currentPosition.y;
+		int cy2 = (int)currentPosition.y;
 
+		distUp =-1;
+		distDown = -1;
+		distLeft = -1;
+		distRight = -1;
+
+		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
+		{
+			cx1--;
+			distLeft++;
+
+		}
+
+		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
+		{
+			cx2++;
+			distRight++;
+
+		}
+
+		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
+		{
+			cy1--;
+			distUp++;
+
+		}
+
+		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
+		{
+			cy2++;
+			distDown++;
+
+		}
 	}
 
 	public override void chooseAction(){
+		
 		float horizontal = Input.GetAxis("Horizontal2");
 		float vertical = Input.GetAxis("Vertical2");
 		//print ("h: " + horizontal + " v: " + vertical);
-		if (horizontal > 0)
+		if (horizontal > 0  && distRight > 0)
 			goRight ();
-		else if (horizontal < 0)
+		else if (horizontal < 0 && distLeft > 0)
 			goLeft ();
-		else if (vertical > 0)
+		else if (vertical > 0 && distUp > 0)
 			goUp ();
-		else if(vertical < 0)
+		else if(vertical < 0 && distDown  > 0)
 			goDown ();
 		
 

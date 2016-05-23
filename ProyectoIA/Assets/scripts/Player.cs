@@ -38,6 +38,17 @@ public class Player : MonoBehaviour {
 		moveDestination = transform.position;
 	}
 
+	public void addObjetivo(Objetivo obj)
+	{
+		for (int i = 0; i < objs.Count; i++) {
+			if (obj.name.Equals (objs [i].name)) {
+				objs [i].changePriority (obj.priority);
+			} else {
+				objs.Add (obj);
+			}
+		}
+	}
+
     public string maxobj()
     {
         string res = " ";
