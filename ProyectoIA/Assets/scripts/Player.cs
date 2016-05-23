@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 		moveDestination = transform.position;
 	}
 
-    public string maxPr()
+    public string maxobj()
     {
         string res = " ";
         int max = 0;
@@ -186,6 +186,11 @@ public class Player : MonoBehaviour {
                 GameManager.instance.map[(int)previousPosition.x][cy2].ColorOnView(2);
             cy2++;
         }
+    }
+
+    public virtual void getView()
+    {
+
     }
 
     // Use this for initialization
