@@ -74,6 +74,8 @@ public class AIPlayer : Player {
         base.colorView(i, 1);
     }
 
+	int lastDistancePlayer = 0;
+	int lastDirectionPlayer = 0;
 	public override void getView()
 	{
 		objs.Clear ();
@@ -116,18 +118,22 @@ public class AIPlayer : Player {
 		}
 		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
 		{
-			if (GameManager.instance.map[cx1][(int)currentPosition.y].mpl)
-				objs.Add(new Objetivo("pi", 20));
-
+			if (GameManager.instance.map [cx1] [(int)currentPosition.y].mpl) {
+				objs.Add (new Objetivo ("pi", 20));
+				lastDistancePlayer = cx1;
+				lastDirectionPlayer = 0;
+			}
 			cx1--;
 			distLeft++;
 
 		}
 		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
 		{
-			if (GameManager.instance.map[cx2][(int)currentPosition.y].mpl)
-				objs.Add(new Objetivo("pd", 20));
-
+			if (GameManager.instance.map [cx2] [(int)currentPosition.y].mpl) {
+				objs.Add (new Objetivo ("pd", 20));
+				lastDistancePlayer = cx2;
+				lastDirectionPlayer = 1;
+			}
 			cx2++;
 			distRight++;
 
@@ -135,8 +141,11 @@ public class AIPlayer : Player {
 
 		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
 		{
-			if (GameManager.instance.map[(int)currentPosition.x][cy1].mpl)
-				objs.Add(new Objetivo("pa", 20));
+			if (GameManager.instance.map [(int)currentPosition.x] [cy1].mpl) {
+				objs.Add (new Objetivo ("pa", 20));
+				lastDistancePlayer = cy1;
+				lastDirectionPlayer = 2;
+			}
 
 			cy1--;
 			distUp++;
@@ -145,8 +154,11 @@ public class AIPlayer : Player {
 
 		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
 		{
-			if (GameManager.instance.map[(int)currentPosition.x][cy2].mpl)
-				objs.Add(new Objetivo("ps", 20));
+			if (GameManager.instance.map [(int)currentPosition.x] [cy2].mpl) {
+				objs.Add (new Objetivo ("ps", 20));
+				lastDistancePlayer = cy2;
+				lastDirectionPlayer = 3;
+			}
 
 			cy2++;
 			distDown++;
@@ -252,10 +264,37 @@ public class AIPlayer : Player {
 			case 3:
 				goLeft ();
 				break;
+			case 4:
+				goLeft ();
+				lastDistancePlayer--;
+				break;
+			case 5:
+				goRight ();
+				lastDistancePlayer--;
+				break;
+			case 6: 
+				goUp ();
+				lastDistancePlayer--;
+				break;
+			case 7:
+				goDown ();
+				lastDistancePlayer--;
+				break;
 		}
 	}
 
 	public int distMax(){
+		if (lastDistancePlayer != 0) {
+			if(lastDirectionPlayer == 0)
+				return 4;
+			if (lastDirectionPlayer == 1)
+				return 5;
+			if (lastDirectionPlayer == 2)
+				return 6;
+			if (lastDirectionPlayer == 3)
+				return 7;
+				
+		}
 		if (distUp > distDown && distUp > distLeft && distUp > distRight) {
 			return 0;
 		} else if (distRight > distLeft && distRight > distDown) {
