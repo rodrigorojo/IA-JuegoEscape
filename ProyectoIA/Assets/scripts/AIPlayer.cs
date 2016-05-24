@@ -74,12 +74,13 @@ public class AIPlayer : Player {
         base.colorView(i, 1);
     }
 
-	int lastDistancePlayer = 0;
-	int lastDirectionPlayer = 0;
+	int lastDistancePlayer;
+	int lastDirectionPlayer;
 	public override void getView()
 	{
 		objs.Clear ();
 		objs.Add(new Objetivo("buscar", 10));
+
 
 		int cx1 = (int)currentPosition.x;
 		int cx2 = (int)currentPosition.x;
@@ -119,8 +120,8 @@ public class AIPlayer : Player {
 		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
 		{
 			if (GameManager.instance.map [cx1] [(int)currentPosition.y].mpl) {
-				objs.Add (new Objetivo ("pi", 20));
-				lastDistancePlayer = cx1;
+				objs.Add (new Objetivo ("pi", 15));
+				lastDistancePlayer = (int) Mathf.Abs(currentPosition.x-cx1);
 				lastDirectionPlayer = 0;
 			}
 			cx1--;
@@ -130,8 +131,8 @@ public class AIPlayer : Player {
 		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
 		{
 			if (GameManager.instance.map [cx2] [(int)currentPosition.y].mpl) {
-				objs.Add (new Objetivo ("pd", 20));
-				lastDistancePlayer = cx2;
+				objs.Add (new Objetivo ("pd", 15));
+				lastDistancePlayer = (int) Mathf.Abs (currentPosition.x - cx2);
 				lastDirectionPlayer = 1;
 			}
 			cx2++;
@@ -142,8 +143,8 @@ public class AIPlayer : Player {
 		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy1].mpl) {
-				objs.Add (new Objetivo ("pa", 20));
-				lastDistancePlayer = cy1;
+				objs.Add (new Objetivo ("pa", 15));
+				lastDistancePlayer = (int) Mathf.Abs(currentPosition.y - cy1);
 				lastDirectionPlayer = 2;
 			}
 
@@ -155,8 +156,8 @@ public class AIPlayer : Player {
 		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy2].mpl) {
-				objs.Add (new Objetivo ("ps", 20));
-				lastDistancePlayer = cy2;
+				objs.Add (new Objetivo ("ps", 15));
+				lastDistancePlayer = (int) Mathf.Abs(currentPosition.y - cy2);
 				lastDirectionPlayer = 3;
 			}
 
@@ -164,7 +165,18 @@ public class AIPlayer : Player {
 			distDown++;
 
 		}
+		if (lastDistancePlayer > 0) {
+			if(lastDirectionPlayer == 0)
+				objs.Add(new Objetivo("pi",12));
+			if (lastDirectionPlayer == 1)
+				objs.Add(new Objetivo("pd",12));
+			if (lastDirectionPlayer == 2)
+				objs.Add(new Objetivo("pa",12));
+			if (lastDirectionPlayer == 3)
+				objs.Add(new Objetivo("ps",12));
+		}
 
+		print ("dist: " + lastDistancePlayer + " direc: " + lastDirectionPlayer);
 
 
 	}
@@ -174,18 +186,18 @@ public class AIPlayer : Player {
 		print (obj);
 		switch (obj) {
 		case "pesi":
-			if (distUp == 0 || distUp > distLeft) {
+			if ((distUp == 0 || distUp > distLeft) && distLeft != 0) {
 				goLeft ();			
-			} else if (distLeft == 0 || distUp < distLeft) {
+			} else if ((distLeft == 0 || distUp < distLeft) && distUp != 0) {
 				goUp ();
 			} else {
 				goPreviousPosition ();
 			}
 			break;
 		case "peii":
-			if (distDown == 0 || distDown > distLeft) {
+			if ((distDown == 0 || distDown > distLeft)&& distLeft != 0) {
 				goLeft ();
-			} else if (distLeft == 0 || distDown < distLeft) {
+			} else if ((distLeft == 0 || distDown < distLeft) && distDown != 0) {
 				goDown ();
 			} else {
 				goPreviousPosition ();
@@ -193,9 +205,9 @@ public class AIPlayer : Player {
 			}
 			break;
 		case "pesd":
-			if (distUp == 0 || distUp > distRight) {
+			if ((distUp == 0 || distUp > distRight ) && distRight != 0) {
 				goRight ();
-			} else if (distRight == 0 || distUp < distRight) {
+			} else if ((distRight == 0 || distUp < distRight) && distDown != 0) {
 				goDown ();
 			} else {
 				goPreviousPosition ();
@@ -203,9 +215,9 @@ public class AIPlayer : Player {
 			}
 			break;
 		case "peid":
-			if (distDown == 0 || distDown > distRight) {
+			if ((distDown == 0 || distDown > distRight) && distRight != 0) {
 				goRight ();
-			} else if (distRight == 0 || distDown < distRight) {
+			} else if ((distRight == 0 || distDown < distRight) && distDown != 0) {
 				goDown ();
 			} else {
 				goPreviousPosition ();
@@ -218,6 +230,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
+			lastDistancePlayer--;
 			break; 
 		case "pd":
 			if (distRight != 0) {
@@ -225,6 +238,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
+			lastDistancePlayer--;
 			break; 
 		case "pa":
 			if (distUp != 0) {
@@ -232,6 +246,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
+			lastDistancePlayer--;
 			break; 
 		case "ps":
 			if (distDown != 0) {
@@ -239,6 +254,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
+			lastDistancePlayer--;
 			break; 
 		case "buscar":
 			buscar ();
@@ -253,18 +269,23 @@ public class AIPlayer : Player {
 		int max = distMax ();
 		switch(max){
 			case 0:
-				goUp ();
+				if(distUp != 0)
+					goUp ();
 				break;
 			case 1:
-				goRight ();
+				if(distRight != 0)
+					goRight ();
 				break;
 			case 2:
-				goDown ();
+				if(distDown != 0)
+					goDown ();
 				break;
 			case 3:
-				goLeft ();
+				if(distLeft != 0)
+					goLeft ();
 				break;
-			case 4:
+
+			/*case 4:				
 				goLeft ();
 				lastDistancePlayer--;
 				break;
@@ -279,12 +300,12 @@ public class AIPlayer : Player {
 			case 7:
 				goDown ();
 				lastDistancePlayer--;
-				break;
+				break;*/
 		}
 	}
 
 	public int distMax(){
-		if (lastDistancePlayer != 0) {
+		/*if (lastDistancePlayer != 0) {
 			if(lastDirectionPlayer == 0)
 				return 4;
 			if (lastDirectionPlayer == 1)
@@ -294,7 +315,7 @@ public class AIPlayer : Player {
 			if (lastDirectionPlayer == 3)
 				return 7;
 				
-		}
+		}*/
 		if (distUp > distDown && distUp > distLeft && distUp > distRight) {
 			return 0;
 		} else if (distRight > distLeft && distRight > distDown) {

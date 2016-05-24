@@ -96,7 +96,7 @@ public class Player : MonoBehaviour {
         int cy1 = (int)currentPosition.y;
         int cy2 = (int)currentPosition.y;
 
-        if(cx1 > 0 && cy1 > 0)
+        /*if(cx1 > 0 && cy1 > 0)
         {
             GameManager.instance.map[cx1 - 1][cy1 - 1].ColorOnView(n);
             GameManager.instance.map[cx1 - 1][cy1 - 1].lci = i;
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour {
         {
             GameManager.instance.map[cx1 + 1][cy1 + 1].ColorOnView(n);
             GameManager.instance.map[cx1 + 1][cy1 + 1].lci = i;
-        }
+        }*/
 
         while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
         {

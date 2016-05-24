@@ -57,7 +57,7 @@ public class UserPlayer : Player {
 
     public override void colorView(int i, int n)
     {
-        base.colorView(i, 0);
+        //base.colorView(i, 0);
     }
 
 	public override void getView()
