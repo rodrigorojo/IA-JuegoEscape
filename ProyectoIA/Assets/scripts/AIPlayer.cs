@@ -176,7 +176,7 @@ public class AIPlayer : Player {
 				objs.Add(new Objetivo("ps",12));
 		}
 
-		print ("dist: " + lastDistancePlayer + " direc: " + lastDirectionPlayer);
+		//print ("dist: " + lastDistancePlayer + " direc: " + lastDirectionPlayer);
 
 
 	}
@@ -262,60 +262,64 @@ public class AIPlayer : Player {
 		case "":
 			break;
 		}
-	}
+    }
 
 	public void buscar(){
+        float r = Random.Range(0.0f, 10.0f);
+        if (r < 3)
+            goMin();
+        else
+            goMax();
+    }
 
-		int max = distMax ();
-		switch(max){
-			case 0:
-				if(distUp != 0)
-					goUp ();
-				break;
-			case 1:
-				if(distRight != 0)
-					goRight ();
-				break;
-			case 2:
-				if(distDown != 0)
-					goDown ();
-				break;
-			case 3:
-				if(distLeft != 0)
-					goLeft ();
-				break;
+    public void goMax()
+    {
+        int max = distMax();
+        switch (max)
+        {
+            case 0:
+                //if (distUp != 0)
+                    goUp();
+                break;
+            case 1:
+                //if (distRight != 0)
+                    goRight();
+                break;
+            case 2:
+                //if (distDown != 0)
+                    goDown();
+                break;
+            case 3:
+               // if (distLeft != 0)
+                    goLeft();
+                break;
+        }
+    }
 
-			/*case 4:				
-				goLeft ();
-				lastDistancePlayer--;
-				break;
-			case 5:
-				goRight ();
-				lastDistancePlayer--;
-				break;
-			case 6: 
-				goUp ();
-				lastDistancePlayer--;
-				break;
-			case 7:
-				goDown ();
-				lastDistancePlayer--;
-				break;*/
-		}
-	}
+    public void goMin()
+    {
+        int min = distMin();
+        switch (min)
+        {
+            case 0:
+                goUp();
+                break;
+            case 1:
+                goRight();
+                break;
+            case 2:
+                goDown();
+                break;
+            case 3:
+                goLeft();
+                break;
+            case 4:
+                goPreviousPosition();
+                break;
+        }
+    }
 
-	public int distMax(){
-		/*if (lastDistancePlayer != 0) {
-			if(lastDirectionPlayer == 0)
-				return 4;
-			if (lastDirectionPlayer == 1)
-				return 5;
-			if (lastDirectionPlayer == 2)
-				return 6;
-			if (lastDirectionPlayer == 3)
-				return 7;
-				
-		}*/
+    public int distMax(){
 		if (distUp > distDown && distUp > distLeft && distUp > distRight) {
 			return 0;
 		} else if (distRight > distLeft && distRight > distDown) {
@@ -325,8 +329,31 @@ public class AIPlayer : Player {
 		}else{
 			return 3;
 		}
-
 	}
+
+    public int distMin()
+    {
+        if (distUp < distDown && distUp < distLeft && distUp < distRight && distUp != 0)
+        {
+            return 0;
+        }
+        else if (distRight < distLeft && distRight < distDown && distRight != 0)
+        {
+            return 1;
+        }
+        else if (distDown < distLeft && distDown != 0)
+        {
+            return 2;
+        }
+        else if (distLeft != 0)
+        {
+            return 3;
+        }
+        else
+        {
+            return 4;
+        }
+    }
 
     public override void TurnUpdate ()
 	{

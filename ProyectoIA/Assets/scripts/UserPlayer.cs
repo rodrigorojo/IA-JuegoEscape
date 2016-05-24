@@ -23,6 +23,7 @@ public class UserPlayer : Player {
         currentPosition = currentPosition + v;
         GameManager.instance.map[(int)previousPosition.x][(int)previousPosition.y].mpl = false;
         GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].mpl = true;
+        transform.GetComponent<Renderer>().material.color = Color.blue;
     }
 
     public override void goUp()
@@ -33,6 +34,7 @@ public class UserPlayer : Player {
         currentPosition = currentPosition + v;
         GameManager.instance.map[(int)previousPosition.x][(int)previousPosition.y].mpl = false;
         GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].mpl = true;
+        transform.GetComponent<Renderer>().material.color = Color.blue;
     }
 
     public override void goRight()
@@ -43,6 +45,7 @@ public class UserPlayer : Player {
         currentPosition = currentPosition + v;
         GameManager.instance.map[(int)previousPosition.x][(int)previousPosition.y].mpl = false;
         GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].mpl = true;
+        transform.GetComponent<Renderer>().material.color = Color.blue;
     }
 
     public override void goLeft()
@@ -53,6 +56,7 @@ public class UserPlayer : Player {
         currentPosition = currentPosition + v;
         GameManager.instance.map[(int)previousPosition.x][(int)previousPosition.y].mpl = false;
         GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].mpl = true;
+        transform.GetComponent<Renderer>().material.color = Color.blue;
     }
 
     public override void colorView(int i, int n)
@@ -62,7 +66,8 @@ public class UserPlayer : Player {
 
 	public override void getView()
 	{
-		int cx1 = (int)currentPosition.x;
+        transform.GetComponent<Renderer>().material.color = Color.green;
+        int cx1 = (int)currentPosition.x;
 		int cx2 = (int)currentPosition.x;
 		int cy1 = (int)currentPosition.y;
 		int cy2 = (int)currentPosition.y;
@@ -114,9 +119,7 @@ public class UserPlayer : Player {
 			goUp ();
 		else if(vertical < 0 && distDown  > 0)
 			goDown ();
-		
-
-	}
+    }
 
 	public void salir(){
 		

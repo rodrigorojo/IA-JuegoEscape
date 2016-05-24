@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	int currentPlayerIndex = 0;
 
 	public int numEnem = 5; 
+    public int numJug = 1;
 
 	void Awake() {
 		instance = this;
@@ -35,10 +36,9 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-       // Debug.Log("turn: " + currentPlayerIndex);
-
-		players [currentPlayerIndex].TurnUpdate ();
-	}
+        // Debug.Log("turn: " + currentPlayerIndex);
+        players [currentPlayerIndex].TurnUpdate ();
+    }
 	
 	public void nextTurn() {
 		if (currentPlayerIndex + 1 < players.Count) {
@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour {
 	public void moveCurrentPlayer() {
 		players [currentPlayerIndex].getView ();
 		players[currentPlayerIndex].chooseAction();
-        
         players[currentPlayerIndex].cleanView(currentPlayerIndex);
         players[currentPlayerIndex].colorView(currentPlayerIndex,0);
     }
@@ -79,17 +78,13 @@ public class GameManager : MonoBehaviour {
 	
 	void generatePlayers() {
 
-        UserPlayer player = ((GameObject)Instantiate(UserPlayerPrefab, new Vector3(0 - Mathf.Floor(mapSizex/2),1.5f, -0 + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<UserPlayer>();        
-		map[0][0].mpl = true;
-        player.currentPosition = new Vector2(0, 0);
-		players.Add(player);
-
-		/*int enem0x = (int)Mathf.Round(Random.Range(mapSizex/2, mapSizex-1));
-		int enem0y = (int)Mathf.Round(Random.Range(0.0f, (mapSizey/2)-1));
-		AIPlayer aiplayer0 = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enem0x - Mathf.Floor(mapSizex/2),1.5f, -enem0y + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
-		map[enem0x][enem0y].epl = true;
-		aiplayer0.currentPosition = new Vector2(enem0x, enem0y);
-		players.Add(aiplayer0);*/
+        for (int i = 0; i < numJug; i++)
+        {
+            UserPlayer player = ((GameObject)Instantiate(UserPlayerPrefab, new Vector3(0 - Mathf.Floor(mapSizex / 2), 1.5f, -0 + Mathf.Floor(mapSizex / 2)), Quaternion.Euler(new Vector3()))).GetComponent<UserPlayer>();
+            map[0][0].mpl = true;
+            player.currentPosition = new Vector2(0, 0);
+            players.Add(player);
+        }
 
 		for(int i = 0; i<numEnem; i++){
 			int enemx = 0;
@@ -102,6 +97,7 @@ public class GameManager : MonoBehaviour {
 			aiplayer = ((GameObject)Instantiate(AIPlayerPrefab, new Vector3(enemx - Mathf.Floor(mapSizex/2),1.5f, -enemy + Mathf.Floor(mapSizex/2)), Quaternion.Euler(new Vector3()))).GetComponent<AIPlayer>();
 			map[enemx][enemy].epl = true;
 			aiplayer.currentPosition = new Vector2(enemx, enemy);
+            aiplayer.previousPosition = new Vector2(enemx, enemy);
 			players.Add(aiplayer);
 			
 		}
