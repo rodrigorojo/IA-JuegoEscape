@@ -74,13 +74,15 @@ public class AIPlayer : Player {
         base.colorView(i, 1);
     }
 
-	int lastDistancePlayer;
-	int lastDirectionPlayer;
+	int lastDistancePlayeru;
+  int lastDistancePlayerd;
+  int lastDistancePlayerr;
+  int lastDistancePlayerl;
+
 	public override void getView()
 	{
 		objs.Clear ();
 		objs.Add(new Objetivo("buscar", 10));
-
 
 		int cx1 = (int)currentPosition.x - 1;
 		int cx2 = (int)currentPosition.x + 1;
@@ -96,33 +98,32 @@ public class AIPlayer : Player {
 		if (cx1 > 0 && cy1 > 0)
 		{
 			if (GameManager.instance.map [cx1] [cy1].mpl)
-				objs.Add (new Objetivo("pesi", 20));
+				objs.Add (new Objetivo("pesi", 99));
 		}
 
 		if (cx1 > 0 && cy2 < GameManager.instance.mapSizey - 1)
 		{
 			if (GameManager.instance.map[cx1][cy2].mpl)
-				objs.Add (new Objetivo("peii", 20));
+				objs.Add (new Objetivo("peii", 99));
 		}
 
 		if (cx2 < GameManager.instance.mapSizex - 1 && cy1 > 0)
 		{
 			if (GameManager.instance.map[cx2][cy1].mpl)
-				objs.Add (new Objetivo("pesd", 20));
+				objs.Add (new Objetivo("pesd", 99));
 		}
 
 		if (cx2 < GameManager.instance.mapSizex - 1 && cy2 < GameManager.instance.mapSizey - 1)
 		{
 			if (GameManager.instance.map[cx2][cy2].mpl)
-				objs.Add (new Objetivo("peid", 20));
+				objs.Add (new Objetivo("peid", 99));
 		}
 
 		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall && !GameManager.instance.map[cx1][(int)currentPosition.y].epl)
 		{
 			if (GameManager.instance.map [cx1] [(int)currentPosition.y].mpl) {
-				objs.Add (new Objetivo ("pi", 15));
-				lastDistancePlayer = (int) Mathf.Abs(currentPosition.x-cx1);
-				lastDirectionPlayer = 0;
+				lastDistancePlayerl = (int) Mathf.Abs(currentPosition.x-cx1);
+        objs.Add (new Objetivo ("pi", 100 - (lastDistancePlayerl*2)));
 			}
 			cx1--;
 			distLeft++;
@@ -131,9 +132,8 @@ public class AIPlayer : Player {
 		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall && !GameManager.instance.map[cx2][(int)currentPosition.y].epl)
 		{
 			if (GameManager.instance.map [cx2] [(int)currentPosition.y].mpl) {
-				objs.Add (new Objetivo ("pd", 15));
-				lastDistancePlayer = (int) Mathf.Abs (currentPosition.x - cx2);
-				lastDirectionPlayer = 1;
+				lastDistancePlayerr = (int) Mathf.Abs (currentPosition.x - cx2);
+        objs.Add (new Objetivo ("pd", 100 - (lastDistancePlayerr*2)));
 			}
 			cx2++;
 			distRight++;
@@ -143,9 +143,8 @@ public class AIPlayer : Player {
 		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall && !GameManager.instance.map[(int)currentPosition.x][cy1].epl)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy1].mpl) {
-				objs.Add (new Objetivo ("pa", 15));
-				lastDistancePlayer = (int) Mathf.Abs(currentPosition.y - cy1);
-				lastDirectionPlayer = 2;
+				lastDistancePlayeru = (int) Mathf.Abs(currentPosition.y - cy1);
+        objs.Add (new Objetivo ("pa", 100 - (lastDistancePlayeru*2)));
 			}
 
 			cy1--;
@@ -156,28 +155,43 @@ public class AIPlayer : Player {
 		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall && !GameManager.instance.map[(int)currentPosition.x][cy2].epl)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy2].mpl) {
-				objs.Add (new Objetivo ("ps", 15));
-				lastDistancePlayer = (int) Mathf.Abs(currentPosition.y - cy2);
-				lastDirectionPlayer = 3;
+				lastDistancePlayerd = (int) Mathf.Abs(currentPosition.y - cy2);
+        objs.Add (new Objetivo ("ps", 100 - (lastDistancePlayerd*2)));
 			}
 
 			cy2++;
 			distDown++;
 
 		}
-		if (lastDistancePlayer > 0) {
-			if(lastDirectionPlayer == 0)
-				objs.Add(new Objetivo("pi",12));
-			if (lastDirectionPlayer == 1)
-				objs.Add(new Objetivo("pd",12));
-			if (lastDirectionPlayer == 2)
-				objs.Add(new Objetivo("pa",12));
-			if (lastDirectionPlayer == 3)
-				objs.Add(new Objetivo("ps",12));
-		}
+		if (lastDistancePlayerl > lastDistancePlayerr && lastDistancePlayerl > lastDistancePlayeru && lastDistancePlayerl > lastDistancePlayerd && lastDistancePlayerl > 0)
+    {
+      objs.Add(new Objetivo("pi",15));
+      lastDistancePlayerr = 0;
+      lastDistancePlayeru = 0;
+      lastDistancePlayerd = 0;
+    }
+		else if (lastDistancePlayerr > lastDistancePlayeru && lastDistancePlayerr > lastDistancePlayerd && lastDistancePlayerr > 0)
+    {
+      objs.Add(new Objetivo("pd",15));
+      lastDistancePlayerl = 0;
+      lastDistancePlayeru = 0;
+      lastDistancePlayerd = 0;
+    }
+		else if (lastDistancePlayeru > lastDistancePlayerd && lastDistancePlayeru > 0) {
+      objs.Add(new Objetivo("pa",15));
+      lastDistancePlayerl = 0;
+      lastDistancePlayerr = 0;
+      lastDistancePlayerd = 0;
+    }
+		else if (lastDistancePlayerd > 0)
+    {
+      objs.Add(new Objetivo("ps",15));
+      lastDistancePlayerl = 0;
+      lastDistancePlayerr = 0;
+      lastDistancePlayerd = 0;
+    }
 
 		//print ("distu: " + distUp + " distd: " + distDown + " distr: " + distRight + " distl: " + distLeft);
-
 	}
 
 	public override void chooseAction(){
@@ -227,7 +241,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
-			lastDistancePlayer--;
+			lastDistancePlayerl--;
 			break;
 		case "pd":
 			if (distRight != 0) {
@@ -235,7 +249,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
-			lastDistancePlayer--;
+			lastDistancePlayerr--;
 			break;
 		case "pa":
 			if (distUp != 0) {
@@ -243,7 +257,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
-			lastDistancePlayer--;
+			lastDistancePlayeru--;
 			break;
 		case "ps":
 			if (distDown != 0) {
@@ -251,7 +265,7 @@ public class AIPlayer : Player {
 			} else {
 				goPreviousPosition ();
 			}
-			lastDistancePlayer--;
+			lastDistancePlayerd--;
 			break;
 		case "buscar":
 			buscar ();
