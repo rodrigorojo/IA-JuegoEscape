@@ -9,14 +9,14 @@ public class AIPlayer : Player {
     void Start () {
         //objs.Add(new Objetivo("buscar", 10));
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public override void goPreviousPosition()
-	{		
+	{
 		moveDestination = new Vector3((previousPosition.x) - Mathf.Floor(GameManager.instance.mapSizex / 2), 1.5f, -(previousPosition.y) + Mathf.Floor(GameManager.instance.mapSizex / 2));
 		GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].epl = false;
 		GameManager.instance.map[(int)previousPosition.x][(int)previousPosition.y].epl = true;
@@ -93,30 +93,30 @@ public class AIPlayer : Player {
 		distRight = 0;
 
 
-		/*if (cx1 > 0 && cy1 > 0)
+		if (cx1 > 0 && cy1 > 0)
 		{
-			if (GameManager.instance.map [cx1 - 1] [cy1 - 1].mpl)
-				addObjetivo (new Objetivo("pesi", 20));
-			//objs.//Add(new Objetivo("pesi", 20));
+			if (GameManager.instance.map [cx1] [cy1].mpl)
+				objs.Add (new Objetivo("pesi", 20));
 		}
 
-		if (cx1 > 0 && cy1 < GameManager.instance.mapSizey - 1)
+		if (cx1 > 0 && cy2 < GameManager.instance.mapSizey - 1)
 		{
-			if (GameManager.instance.map[cx1 - 1][cy1 + 1].mpl)
-				addObjetivo(new Objetivo("peii", 20));
+			if (GameManager.instance.map[cx1][cy2].mpl)
+				objs.Add (new Objetivo("peii", 20));
 		}
 
-		if (cx1 < GameManager.instance.mapSizex - 1 && cy1 > 0)
+		if (cx2 < GameManager.instance.mapSizex - 1 && cy1 > 0)
 		{
-			if (GameManager.instance.map[cx1 + 1][cy1 - 1].mpl)
-				addObjetivo(new Objetivo("pesd", 20));
+			if (GameManager.instance.map[cx2][cy1].mpl)
+				objs.Add (new Objetivo("pesd", 20));
 		}
 
-		if (cx1 < GameManager.instance.mapSizex - 1 && cy1 < GameManager.instance.mapSizey - 1)
+		if (cx2 < GameManager.instance.mapSizex - 1 && cy2 < GameManager.instance.mapSizey - 1)
 		{
-			if (GameManager.instance.map[cx1 + 1][cy1 + 1].mpl)
-				addObjetivo(new Objetivo("peid", 20));
-		}*/
+			if (GameManager.instance.map[cx2][cy2].mpl)
+				objs.Add (new Objetivo("peid", 20));
+		}
+
 		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall && !GameManager.instance.map[cx1][(int)currentPosition.y].epl)
 		{
 			if (GameManager.instance.map [cx1] [(int)currentPosition.y].mpl) {
@@ -176,54 +176,51 @@ public class AIPlayer : Player {
 				objs.Add(new Objetivo("ps",12));
 		}
 
-		print ("distu: " + distUp + " distd: " + distDown + " distr: " + distRight + " distl: " + distLeft);
-
+		//print ("distu: " + distUp + " distd: " + distDown + " distr: " + distRight + " distl: " + distLeft);
 
 	}
 
 	public override void chooseAction(){
 		string obj = maxobj ();
-		//print (obj);
+		print (obj);
 		switch (obj) {
 		case "pesi":
-			if ((distUp == 0 || distUp > distLeft) && distLeft != 0) {
-				goLeft ();			
-			} else if ((distLeft == 0 || distUp < distLeft) && distUp != 0) {
+			if (distLeft != 0) {
+				goLeft ();
+			} else if (distUp != 0) {
 				goUp ();
 			} else {
 				goPreviousPosition ();
 			}
 			break;
 		case "peii":
-			if ((distDown == 0 || distDown > distLeft)&& distLeft != 0) {
-				goLeft ();
-			} else if ((distLeft == 0 || distDown < distLeft) && distDown != 0) {
+			if (distDown != 0) {
 				goDown ();
+			} else if (distLeft != 0) {
+				goLeft ();
 			} else {
 				goPreviousPosition ();
 
 			}
 			break;
 		case "pesd":
-			if ((distUp == 0 || distUp > distRight ) && distRight != 0) {
+			if (distRight != 0) {
 				goRight ();
-			} else if ((distRight == 0 || distUp < distRight) && distDown != 0) {
-				goDown ();
+			} else if (distUp != 0) {
+				goUp ();
 			} else {
 				goPreviousPosition ();
-
 			}
 			break;
 		case "peid":
-			if ((distDown == 0 || distDown > distRight) && distRight != 0) {
+			if (distRight != 0) {
 				goRight ();
-			} else if ((distRight == 0 || distDown < distRight) && distDown != 0) {
+			} else if (distDown != 0) {
 				goDown ();
 			} else {
 				goPreviousPosition ();
-
 			}
-			break; 
+			break;
 		case "pi":
 			if (distLeft != 0) {
 				goLeft ();
@@ -231,7 +228,7 @@ public class AIPlayer : Player {
 				goPreviousPosition ();
 			}
 			lastDistancePlayer--;
-			break; 
+			break;
 		case "pd":
 			if (distRight != 0) {
 				goRight ();
@@ -239,7 +236,7 @@ public class AIPlayer : Player {
 				goPreviousPosition ();
 			}
 			lastDistancePlayer--;
-			break; 
+			break;
 		case "pa":
 			if (distUp != 0) {
 				goUp ();
@@ -247,7 +244,7 @@ public class AIPlayer : Player {
 				goPreviousPosition ();
 			}
 			lastDistancePlayer--;
-			break; 
+			break;
 		case "ps":
 			if (distDown != 0) {
 				goDown ();
@@ -255,7 +252,7 @@ public class AIPlayer : Player {
 				goPreviousPosition ();
 			}
 			lastDistancePlayer--;
-			break; 
+			break;
 		case "buscar":
 			buscar ();
 			break;
