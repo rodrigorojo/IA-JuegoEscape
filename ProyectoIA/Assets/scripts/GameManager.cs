@@ -1,45 +1,58 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
-	
+
 	public GameObject TilePrefab;
 	public GameObject UserPlayerPrefab;
 	public GameObject AIPlayerPrefab;
     public GameObject WallPrefab;
     public GameObject GoalPrefab;
-	
+
+		public Text message;
+		public bool win;
+		public bool lose;
+
 	public int mapSizex;
     public int mapSizey;
-	
+
 	public List <List<Tile>> map = new List<List<Tile>>();
 	public List <Player> players = new List<Player>();
     public List <Wall> walls = new List<Wall>();
 	int currentPlayerIndex = 0;
 
-	public int numEnem = 5; 
+	public int numEnem = 5;
     public int numJug = 1;
 
 	void Awake() {
 		instance = this;
 	}
-	
+
 	// Use this for initialization
-	void Start () {		
+	void Start () {
 		generateMap();
 		generateWalls();
 		generatePlayers();
-       
+		message.text = "";
 	}
 
 	// Update is called once per frame
 	void Update () {
         // Debug.Log("turn: " + currentPlayerIndex);
         players [currentPlayerIndex].TurnUpdate ();
+				if(win){
+					message.text = "WIN";
+				}
+
+				if(lose){
+					message.text = "GAME OVER";
+				}
+
     }
-	
+
 	public void nextTurn() {
 		if (currentPlayerIndex + 1 < players.Count) {
 			currentPlayerIndex++;
@@ -47,14 +60,15 @@ public class GameManager : MonoBehaviour {
 			currentPlayerIndex = 0;
 		}
 	}
-	
+
 	public void moveCurrentPlayer() {
-		players [currentPlayerIndex].getView ();
-		players[currentPlayerIndex].chooseAction();
+				players [currentPlayerIndex].getView ();
+				players[currentPlayerIndex].chooseAction();
         players[currentPlayerIndex].cleanView(currentPlayerIndex);
         players[currentPlayerIndex].colorView(currentPlayerIndex,0);
+				players [currentPlayerIndex].checkStatus ();
     }
-	
+
 	void generateMap() {
 		map = new List<List<Tile>>();
 		for (int i = 0; i < mapSizex; i++) {
@@ -75,7 +89,7 @@ public class GameManager : MonoBehaviour {
 			map.Add(row);
 		}
 	}
-	
+
 	void generatePlayers() {
 
         for (int i = 0; i < numJug; i++)
@@ -99,7 +113,7 @@ public class GameManager : MonoBehaviour {
 			aiplayer.currentPosition = new Vector2(enemx, enemy);
             aiplayer.previousPosition = new Vector2(enemx, enemy);
 			players.Add(aiplayer);
-			
+
 		}
     }
 

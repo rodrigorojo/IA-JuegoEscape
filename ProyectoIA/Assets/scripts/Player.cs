@@ -33,7 +33,7 @@ public class Player : MonoBehaviour {
 	public int distRight;
 
 
-	
+
 	void Awake () {
 		moveDestination = transform.position;
 	}
@@ -76,17 +76,17 @@ public class Player : MonoBehaviour {
 
     public virtual void goUp()
     {
-        
+
     }
 
     public virtual void goRight()
     {
-        
+
     }
 
     public virtual void goLeft()
     {
-        
+
     }
 
     public virtual void colorView(int i, int n)
@@ -217,20 +217,24 @@ public class Player : MonoBehaviour {
     }
 
 	public virtual void chooseAction(){
-		
+
 	}
+
+  public virtual void checkStatus() {
+    
+  }
 
     // Use this for initialization
     void Start () {
-	
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
-	
+
 	public virtual void TurnUpdate () {
-		
+
 	}
 }

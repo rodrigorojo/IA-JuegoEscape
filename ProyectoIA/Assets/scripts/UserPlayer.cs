@@ -9,10 +9,10 @@ public class UserPlayer : Player {
     void Start () {
         objs.Add(new Objetivo("salir", 10));
     }
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
     public override void goDown()
@@ -107,7 +107,7 @@ public class UserPlayer : Player {
 	}
 
 	public override void chooseAction(){
-		
+
 		float horizontal = Input.GetAxis("Horizontal2");
 		float vertical = Input.GetAxis("Vertical2");
 		//print ("h: " + horizontal + " v: " + vertical);
@@ -121,9 +121,12 @@ public class UserPlayer : Player {
 			goDown ();
     }
 
-	public void salir(){
-		
-	}
+    public override void checkStatus () {
+      if (GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].salida)
+      {
+        GameManager.instance.win = true;
+      }
+    }
 
     public override void TurnUpdate ()
 	{

@@ -352,6 +352,13 @@ public class AIPlayer : Player {
         }
     }
 
+    public override void checkStatus () {
+      if (GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].mpl)
+      {
+        GameManager.instance.lose = true;
+      }
+    }
+
     public override void TurnUpdate ()
 	{
         if (Vector3.Distance(moveDestination, transform.position) > 0.1f)
