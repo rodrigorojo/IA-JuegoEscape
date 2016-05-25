@@ -188,7 +188,7 @@ public class AIPlayer : Player {
       objs.Add(new Objetivo("ps",15));
       lastDistancePlayerl = 0;
       lastDistancePlayerr = 0;
-      lastDistancePlayerd = 0;
+      lastDistancePlayeru = 0;
     }
 
 		//print ("distu: " + distUp + " distd: " + distDown + " distr: " + distRight + " distl: " + distLeft);
