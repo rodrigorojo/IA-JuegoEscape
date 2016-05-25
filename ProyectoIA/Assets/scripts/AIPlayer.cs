@@ -82,18 +82,18 @@ public class AIPlayer : Player {
 		objs.Add(new Objetivo("buscar", 10));
 
 
-		int cx1 = (int)currentPosition.x;
-		int cx2 = (int)currentPosition.x;
-		int cy1 = (int)currentPosition.y;
-		int cy2 = (int)currentPosition.y;
+		int cx1 = (int)currentPosition.x - 1;
+		int cx2 = (int)currentPosition.x + 1;
+		int cy1 = (int)currentPosition.y - 1;
+		int cy2 = (int)currentPosition.y + 1;
 
-		distUp =-1;
-		distDown = -1;
-		distLeft = -1;
-		distRight = -1;
+		distUp = 0;
+		distDown = 0;
+		distLeft = 0;
+		distRight = 0;
 
 
-		if (cx1 > 0 && cy1 > 0)
+		/*if (cx1 > 0 && cy1 > 0)
 		{
 			if (GameManager.instance.map [cx1 - 1] [cy1 - 1].mpl)
 				addObjetivo (new Objetivo("pesi", 20));
@@ -116,8 +116,8 @@ public class AIPlayer : Player {
 		{
 			if (GameManager.instance.map[cx1 + 1][cy1 + 1].mpl)
 				addObjetivo(new Objetivo("peid", 20));
-		}
-		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall)
+		}*/
+		while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)currentPosition.y].wall && !GameManager.instance.map[cx1][(int)currentPosition.y].epl)
 		{
 			if (GameManager.instance.map [cx1] [(int)currentPosition.y].mpl) {
 				objs.Add (new Objetivo ("pi", 15));
@@ -128,7 +128,7 @@ public class AIPlayer : Player {
 			distLeft++;
 
 		}
-		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall)
+		while (cx2 < GameManager.instance.mapSizex && !GameManager.instance.map[cx2][(int)currentPosition.y].wall && !GameManager.instance.map[cx2][(int)currentPosition.y].epl)
 		{
 			if (GameManager.instance.map [cx2] [(int)currentPosition.y].mpl) {
 				objs.Add (new Objetivo ("pd", 15));
@@ -140,7 +140,7 @@ public class AIPlayer : Player {
 
 		}
 
-		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall)
+		while (cy1 >= 0 && !GameManager.instance.map[(int)currentPosition.x][cy1].wall && !GameManager.instance.map[(int)currentPosition.x][cy1].epl)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy1].mpl) {
 				objs.Add (new Objetivo ("pa", 15));
@@ -153,7 +153,7 @@ public class AIPlayer : Player {
 
 		}
 
-		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall)
+		while (cy2 < GameManager.instance.mapSizey && !GameManager.instance.map[(int)currentPosition.x][cy2].wall && !GameManager.instance.map[(int)currentPosition.x][cy2].epl)
 		{
 			if (GameManager.instance.map [(int)currentPosition.x] [cy2].mpl) {
 				objs.Add (new Objetivo ("ps", 15));
@@ -176,14 +176,14 @@ public class AIPlayer : Player {
 				objs.Add(new Objetivo("ps",12));
 		}
 
-		//print ("dist: " + lastDistancePlayer + " direc: " + lastDirectionPlayer);
+		print ("distu: " + distUp + " distd: " + distDown + " distr: " + distRight + " distl: " + distLeft);
 
 
 	}
 
 	public override void chooseAction(){
 		string obj = maxobj ();
-		print (obj);
+		//print (obj);
 		switch (obj) {
 		case "pesi":
 			if ((distUp == 0 || distUp > distLeft) && distLeft != 0) {
@@ -278,19 +278,19 @@ public class AIPlayer : Player {
         switch (max)
         {
             case 0:
-                //if (distUp != 0)
+                if (distUp != 0)
                     goUp();
                 break;
             case 1:
-                //if (distRight != 0)
+                if (distRight != 0)
                     goRight();
                 break;
             case 2:
-                //if (distDown != 0)
+                if (distDown != 0)
                     goDown();
                 break;
             case 3:
-               // if (distLeft != 0)
+                if (distLeft != 0)
                     goLeft();
                 break;
         }

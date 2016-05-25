@@ -101,19 +101,16 @@ public class Player : MonoBehaviour {
             GameManager.instance.map[cx1 - 1][cy1 - 1].ColorOnView(n);
             GameManager.instance.map[cx1 - 1][cy1 - 1].lci = i;
         }
-
         if(cx1 > 0 && cy1 < GameManager.instance.mapSizey-1)
         {
             GameManager.instance.map[cx1 - 1][cy1 + 1].ColorOnView(n);
             GameManager.instance.map[cx1 - 1][cy1 + 1].lci = i;
         }
-
         if (cx1 < GameManager.instance.mapSizex-1 && cy1 > 0)
         {
             GameManager.instance.map[cx1 + 1][cy1 - 1].ColorOnView(n);
             GameManager.instance.map[cx1 + 1][cy1 - 1].lci = i;
         }
-
         if (cx1 < GameManager.instance.mapSizex - 1 && cy1 < GameManager.instance.mapSizey - 1)
         {
             GameManager.instance.map[cx1 + 1][cy1 + 1].ColorOnView(n);
@@ -161,7 +158,7 @@ public class Player : MonoBehaviour {
         int cy1 = (int)previousPosition.y;
         int cy2 = (int)previousPosition.y;
 
-        if (cx1 > 0 && cy1 > 0)
+        /*if (cx1 > 0 && cy1 > 0)
         {
             if(GameManager.instance.map[cx1 - 1][cy1 - 1].lci == i)
                 GameManager.instance.map[cx1 - 1][cy1 - 1].ColorOnView(2);
@@ -183,7 +180,7 @@ public class Player : MonoBehaviour {
         {
             if(GameManager.instance.map[cx1 + 1][cy1 + 1].lci == i)
                 GameManager.instance.map[cx1 + 1][cy1 + 1].ColorOnView(2);
-        }
+        }*/
 
         while (cx1 >= 0 && !GameManager.instance.map[cx1][(int)previousPosition.y].wall)
         {
