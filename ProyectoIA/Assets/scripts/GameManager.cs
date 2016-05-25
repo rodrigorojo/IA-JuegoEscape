@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour {
 			int enemx = 0;
 			int enemy = 0;
 			AIPlayer aiplayer;
-			while(map[enemx][enemy].wall || (enemx == 0 && enemy == 0) || enemx == -1 || enemy == -1){
+			while(map[enemx][enemy].wall || (enemx == 0 && enemy == 0) || (enemx == 1 && enemy == 0) || (enemx == 0 && enemy == 1)){
 				enemx = (int)Mathf.Round(Random.Range(1.0f, mapSizex-2));
 				enemy = (int)Mathf.Round(Random.Range(1.0f, mapSizey-2));
 			}
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour {
             int m = -1;
             int n = -1;
             Wall wall0;
-			while(m == -1 || n == -1 || (m==0 && n == 0) || (m == mapSizex-1 && n == mapSizey-1)) {
+			while(m == -1 || n == -1 || (m==0 && n == 0) || (m == mapSizex-1 && n == mapSizey-1) || (m==0 && n == 1) || (m == mapSizex-1 && n == mapSizey-2)) {
                 m = (int)Mathf.Round(Random.Range(0.0f, mapSizex - 1));
                 n = (int)Mathf.Round(Random.Range(0.0f, mapSizey - 1));
             }

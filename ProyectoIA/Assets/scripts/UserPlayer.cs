@@ -122,6 +122,10 @@ public class UserPlayer : Player {
     }
 
     public override void checkStatus () {
+      if (GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].epl)
+      {
+        GameManager.instance.lose = true;
+      }
       if (GameManager.instance.map[(int)currentPosition.x][(int)currentPosition.y].salida)
       {
         GameManager.instance.win = true;
